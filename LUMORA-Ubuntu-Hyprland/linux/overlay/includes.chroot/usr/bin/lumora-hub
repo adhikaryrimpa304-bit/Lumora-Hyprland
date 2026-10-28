@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import os, platform, shutil, subprocess, gi
+from pathlib import Path
+gi.require_version('Gtk','3.0')
+from gi.repository import Gtk, Gdk
+ACCENT='#00F0FF'; BG='#130B20'; SURFACE='#1C1230'; PURPLE='#B026FF'
+CSS=f"""window {{ background: {BG}; color: #f6f2ff; }} headerbar, .card {{ background: {SURFACE}; }} button {{ background: #302044; color: #f6f2ff; border: 1px solid {PURPLE}; border-radius: 10px; padding: 10px; }} button:hover {{ background: #40265b; }} label.title {{ color: {ACCENT}; font-size: 22px; font-weight: bold; }} label.muted {{ color: #c6b8d8; }}"""
+provider=Gtk.CssProvider(); provider.load_from_data(CSS.encode()); Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+class Hub(Gtk.Window):
+ def __init__(self):
+  super().__init__(title='LUMORA Hub'); self.set_default_size(760,560); self.set_border_width(18)
+  outer=Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=12); self.add(outer)
+  head=Gtk.Label(label='LUMORA HUB'); head.get_style_context().add_class('title'); outer.pack_start(head,False,False,0)
+  sub=Gtk.Label(label='Your desktop, tools and system status'); sub.get_style_context().add_class('muted'); outer.pack_start(sub,False,False,0)
+  nb=Gtk.Notebook(); outer.pack_start(nb,True,True,0)
+  self.page(nb,'Home', [('Welcome & setup','lumora-welcome'),('Software centre','gnome-software'),('System information','lumora-system-info'),('Wallpaper picker','lumora-wallpapers')], 'Choose a tool. Administrative actions ask for authentication where needed.')
+  self.page(nb,'Maintenance',[('Check for updates','lumora-update'),('Recovery diagnostics','lumora-recovery'),('Graphical installer','lumora-installer')], 'Review prompts carefully. Installation and recovery can affect disks; always back up important files.')
+  self.page(nb,'About',[],f'LUMORA OS • Ubuntu-based • Hyprland\nArchitecture: {platform.machine()}\nKernel: {platform.release()}\n\nExperimental development build. Not a verified release.')
+ def page(self,nb,title,actions,description):
+  box=Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=12); box.set_border_width(18)
+  for label,cmd in actions:
+   b=Gtk.Button(label=label); b.connect('clicked',lambda _b,c=cmd:self.launch(c)); box.pack_start(b,False,False,0)
+  lbl=Gtk.Label(label=description); lbl.set_line_wrap(True); lbl.set_xalign(0); lbl.get_style_context().add_class('muted'); box.pack_start(lbl,False,False,8)
+  nb.append_page(box,Gtk.Label(label=title))
+ def launch(self,cmd):
+  try: subprocess.Popen([cmd], start_new_session=True)
+  except Exception as e:
+   d=Gtk.MessageDialog(transient_for=self,flags=0,message_type=Gtk.MessageType.ERROR,buttons=Gtk.ButtonsType.CLOSE,text='Could not launch tool'); d.format_secondary_text(f'{cmd}: {e}'); d.run(); d.destroy()
+win=Hub(); win.connect('destroy',Gtk.main_quit); win.show_all(); Gtk.main()

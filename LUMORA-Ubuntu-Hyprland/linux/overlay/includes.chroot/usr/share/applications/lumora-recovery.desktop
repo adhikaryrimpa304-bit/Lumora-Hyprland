@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LUMORA Recovery Diagnostics
+Comment=LUMORA OS utility
+Exec=lumora-recovery
+Icon=lumora-hub
+Terminal=false
+Categories=System;

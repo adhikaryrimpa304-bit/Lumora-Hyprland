@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Install LUMORA OS
+Comment=LUMORA OS utility
+Exec=lumora-installer
+Icon=lumora-hub
+Terminal=false
+Categories=System;

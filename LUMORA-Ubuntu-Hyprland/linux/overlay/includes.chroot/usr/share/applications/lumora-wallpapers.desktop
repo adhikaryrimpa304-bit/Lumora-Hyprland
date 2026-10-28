@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LUMORA Wallpapers
+Comment=LUMORA OS utility
+Exec=lumora-wallpapers
+Icon=lumora-hub
+Terminal=false
+Categories=Settings;DesktopSettings;

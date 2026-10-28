@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Calamares is not ready for disk installation until a complete Ubuntu module configuration
+# and branding package are shipped and tested. Fail closed rather than risking user data.
+yad --title='LUMORA Installer' --image=dialog-warning --button='Close:0' --text='The LUMORA installer is not ready yet. Calamares is present only as a dependency/placeholder; the required partitioning, unpack/bootstrap, user creation, bootloader and branding configuration has not been validated. Installation is disabled to protect your data.' 2>/dev/null || printf '%s\n' 'LUMORA installer disabled: Calamares configuration is incomplete.'
+exit 1

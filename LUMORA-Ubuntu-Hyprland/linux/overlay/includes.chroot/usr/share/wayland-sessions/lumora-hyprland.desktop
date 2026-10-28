@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=LUMORA Hyprland
+Comment=LUMORA OS Wayland desktop
+Exec=Hyprland
+Type=Application
+DesktopNames=Hyprland;Lumora

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if ! command -v pkexec >/dev/null; then notify-send 'LUMORA Update' 'pkexec is unavailable. Open a terminal and run sudo apt update && sudo apt full-upgrade.'; exit 1; fi
+# Update indexes and upgrades require explicit privilege approval.
+exec foot -T 'LUMORA Update' sh -lc 'echo "Refreshing package lists…"; pkexec apt-get update && echo "\nApplying available upgrades…" && pkexec apt-get full-upgrade; rc=$?; echo; echo "Finished (exit $rc). Press Enter to close."; read _; exit $rc'

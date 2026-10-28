@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+TITLE='Welcome to LUMORA OS'
+MESSAGE='LUMORA OS is an experimental Ubuntu-based Hyprland desktop.\n\nKeyboard shortcuts:\nSuper + Enter — Terminal\nSuper + Space — App launcher\nSuper + E — File manager\nSuper + B — Browser\nSuper + H — LUMORA Hub\nSuper + L — Lock screen\nSuper + Shift + E — Exit Hyprland\n\nPlease do not use the installer on a disk containing important data until the installer has been fully tested.'
+if command -v yad >/dev/null 2>&1; then
+  yad --info --title="$TITLE" --width=520 --text="$MESSAGE" --button='Open LUMORA Hub:0' && exec lumora-hub
+else
+  exec foot -T "$TITLE" sh -lc 'printf "%b\n" "$1"; read -r -p "Press Enter to close…"' sh "$MESSAGE"
+fi

@@ -1,0 +1,28 @@
+# LUMORA clean GRUB theme — midnight / violet / cyan
+desktop-image: "background.jpg"
+title-text: ""
+message-font: "DejaVu Sans 12"
+message-color: "#F4F0FF"
+message-bg-color: "#090A12"
+terminal-font: "DejaVu Sans Mono 12"
++ boot_menu {
+  left = 25%
+  top = 30%
+  width = 50%
+  height = 40%
+  item_font = "DejaVu Sans 16"
+  item_color = "#F4F0FF"
+  selected_item_color = "#00F0FF"
+  item_height = 44
+  item_padding = 10
+  item_spacing = 8
+}
++ label {
+  top = 84%
+  left = 0
+  width = 100%
+  align = "center"
+  text = "L U M O R A   O S   •   MIDNIGHT / VIOLET / CYAN"
+  font = "DejaVu Sans 12"
+  color = "#B026FF"
+}

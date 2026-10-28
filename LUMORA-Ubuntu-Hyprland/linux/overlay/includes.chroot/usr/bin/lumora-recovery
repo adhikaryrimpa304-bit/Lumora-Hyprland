@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+import subprocess, shutil
+import gi
+gi.require_version('Gtk','3.0')
+from gi.repository import Gtk
+checks=[]
+for name in ['Hyprland','waybar','foot','thunar','firefox','nmcli']:
+ checks.append(f'{name}: {shutil.which(name) or "not found in PATH"}')
+try: checks.append('\nRecent user errors:\n'+subprocess.check_output(['journalctl','--user','-b','-p','err','-n','20','--no-pager'],text=True,stderr=subprocess.STDOUT,timeout=5))
+except Exception as e: checks.append(f'\nCould not read user journal: {e}')
+text='LUMORA Recovery Diagnostics\n\n'+ '\n'.join(checks)+'\n\nThis tool only diagnoses; it does not modify disks or boot settings. Save logs before attempting repairs.'
+d=Gtk.MessageDialog(title='LUMORA Recovery',flags=0,message_type=Gtk.MessageType.INFO,buttons=Gtk.ButtonsType.CLOSE,text='Diagnostic report'); d.set_default_size(700,500); d.format_secondary_text(text); d.run(); d.destroy()

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LUMORA System Information
+Comment=LUMORA OS utility
+Exec=lumora-system-info
+Icon=lumora-hub
+Terminal=false
+Categories=System;

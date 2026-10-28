@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import platform, subprocess, shutil
+import gi
+gi.require_version('Gtk','3.0')
+from gi.repository import Gtk
+try: osname=subprocess.check_output(['bash','-lc','. /etc/os-release; echo "$PRETTY_NAME"'],text=True).strip()
+except: osname='Unknown Linux'
+mem='Unavailable'
+try:
+ for line in open('/proc/meminfo'):
+  if line.startswith('MemTotal:'): mem=f'{int(line.split()[1])//1024} MiB'; break
+except: pass
+text=f'LUMORA System Information\n\nOS: {osname}\nKernel: {platform.release()}\nArchitecture: {platform.machine()}\nPython: {platform.python_version()}\nMemory: {mem}\n\nThis panel reports basic system details; hardware sensors and update status are not yet integrated.'
+d=Gtk.MessageDialog(title='LUMORA System Info',flags=0,message_type=Gtk.MessageType.INFO,buttons=Gtk.ButtonsType.CLOSE,text='System information'); d.format_secondary_text(text); d.run(); d.destroy()

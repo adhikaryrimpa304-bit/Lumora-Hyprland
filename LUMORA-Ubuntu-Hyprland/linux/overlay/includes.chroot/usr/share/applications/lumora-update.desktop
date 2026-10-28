@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LUMORA System Update
+Comment=LUMORA OS utility
+Exec=lumora-update
+Icon=lumora-hub
+Terminal=false
+Categories=System;Settings;
